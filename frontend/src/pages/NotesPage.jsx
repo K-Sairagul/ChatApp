@@ -73,37 +73,37 @@ const NotesPage = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-200 bg-white flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <Link to="/" className="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      {/* Header - Improved for mobile */}
+      <div className="p-3 sm:p-4 border-b border-gray-200 bg-white flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link to="/" className="btn btn-ghost btn-circle p-2 min-h-0 h-10 w-10">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
           <div>
-            <h1 className="text-lg font-semibold text-gray-800">Shared Notes</h1>
+            <h1 className="text-base sm:text-lg font-semibold text-gray-800">Shared Notes</h1>
             <p className="text-xs text-gray-500">Collaborate with your friend</p>
           </div>
         </div>
         <Link
           to="/"
-          className="px-3 py-1 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+          className="px-3 py-2 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition text-sm sm:text-base border border-gray-300"
         >
           ← Back to Chat
         </Link>
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col p-4 overflow-hidden">
+      <div className="flex-1 flex flex-col p-3 sm:p-4 overflow-hidden">
         {/* Notes list */}
-        <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+        <div className="flex-1 overflow-y-auto mb-3 sm:mb-4 space-y-2 sm:space-y-3">
           {isLoading ? (
             <div className="flex justify-center items-center h-32">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
             </div>
           ) : notes.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+            <div className="flex flex-col items-center justify-center h-64 text-gray-400 p-4 text-center">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -116,7 +116,7 @@ const NotesPage = () => {
             notes.map((note) => (
               <div
                 key={note._id}
-                className={`p-3 rounded-lg max-w-xs md:max-w-md ${
+                className={`p-3 rounded-lg max-w-[85%] xs:max-w-xs sm:max-w-md ${
                   note.createdBy._id === authUser._id
                     ? 'bg-blue-500 text-white ml-auto'
                     : 'bg-white border border-gray-200'
@@ -127,13 +127,13 @@ const NotesPage = () => {
                     onSubmit={submitEdit}
                     className="flex flex-col gap-2"
                   >
-                    <input
+                    <textarea
                       value={editingText}
                       onChange={(e) => setEditingText(e.target.value)}
-                      className={`input input-sm w-full ${
+                      className={`textarea w-full min-h-[100px] ${
                         note.createdBy._id === authUser._id
-                          ? 'bg-blue-400 text-white placeholder-blue-200'
-                          : 'bg-gray-50'
+                          ? 'bg-blue-400 text-white placeholder-blue-200 border-blue-300'
+                          : 'bg-gray-50 border-gray-200'
                       }`}
                       autoFocus
                     />
@@ -141,18 +141,18 @@ const NotesPage = () => {
                       <button 
                         type="button"
                         onClick={cancelEdit}
-                        className="btn btn-xs btn-ghost"
+                        className="btn btn-sm btn-ghost"
                       >
                         Cancel
                       </button>
-                      <button className="btn btn-xs btn-success">
+                      <button className="btn btn-sm btn-success">
                         Save
                       </button>
                     </div>
                   </form>
                 ) : (
                   <>
-                    <div className="mb-2">{note.text}</div>
+                    <div className="mb-2 break-words">{note.text}</div>
                     
                     {/* Timestamps */}
                     <div className={`text-xs flex justify-between items-center ${
@@ -169,17 +169,17 @@ const NotesPage = () => {
                       <div className="flex gap-1 mt-2 justify-end">
                         <button
                           onClick={() => startEdit(note)}
-                          className="btn btn-xs btn-ghost btn-circle"
+                          className="btn btn-sm btn-ghost btn-circle p-1.5"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                         </button>
                         <button
                           onClick={() => deleteNote(note._id)}
-                          className="btn btn-xs btn-ghost btn-circle"
+                          className="btn btn-sm btn-ghost btn-circle p-1.5"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
@@ -192,17 +192,18 @@ const NotesPage = () => {
           )}
         </div>
 
-        {/* Add form */}
+        {/* Add form - Improved for mobile */}
         <form onSubmit={submitAdd} className="flex gap-2 p-3 bg-white rounded-lg border border-gray-200 shadow-sm">
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Write a note..."
-            className="input input-bordered flex-1"
+            className="input input-bordered flex-1 min-h-[44px]"
           />
           <button 
-            className="btn btn-primary"
+            className="btn btn-primary min-h-[44px] px-3"
             disabled={!text.trim()}
+            type="submit"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

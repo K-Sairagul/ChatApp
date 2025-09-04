@@ -83,7 +83,7 @@ const TodoList = () => {
     <div className="flex flex-col h-screen bg-gray-100">
       {/* Header */}
       <div className="bg-blue-600 text-white p-4 shadow-md">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center">
             <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
               <svg
@@ -112,27 +112,26 @@ const TodoList = () => {
           </div>
 
           {/* Navigation buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-2 self-end sm:self-auto">
             <Link
               to="/"
-              className="px-3 py-1 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition"
+              className="px-3 py-1 bg-white text-blue-600 rounded-md hover:bg-gray-100 transition text-sm sm:text-base"
             >
               ← Back to Chat
             </Link>
-            
           </div>
         </div>
       </div>
 
       {/* Task List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         ) : todos.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="bg-white rounded-lg p-6 shadow-sm max-w-md mx-auto">
+          <div className="text-center py-8 sm:py-12">
+            <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm max-w-md mx-auto">
               <h3 className="text-lg font-medium text-gray-700 mb-2">
                 No tasks yet
               </h3>
@@ -147,7 +146,7 @@ const TodoList = () => {
               {/* Checkbox */}
               <div className="flex-shrink-0 mt-1">
                 {editingId === t._id ? (
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center">
                     ✏️
                   </div>
                 ) : (
@@ -165,12 +164,12 @@ const TodoList = () => {
                 {editingId === t._id ? (
                   <form
                     onSubmit={submitEdit}
-                    className="bg-blue-50 rounded-lg p-4 border border-blue-200"
+                    className="bg-blue-50 rounded-lg p-3 sm:p-4 border border-blue-200"
                   >
                     <input
                       value={editingText}
                       onChange={(e) => setEditingText(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md mb-2 text-sm sm:text-base"
                       autoFocus
                       placeholder="Edit task..."
                     />
@@ -178,19 +177,19 @@ const TodoList = () => {
                       type="datetime-local"
                       value={editingCompleteBy}
                       onChange={(e) => setEditingCompleteBy(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md mb-2 text-sm sm:text-base"
                     />
                     <div className="flex gap-2">
                       <button
                         type="submit"
-                        className="px-3 py-1 bg-blue-600 text-white rounded-md"
+                        className="px-3 py-1 bg-blue-600 text-white rounded-md text-sm sm:text-base"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={cancelEdit}
-                        className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md"
+                        className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm sm:text-base"
                       >
                         Cancel
                       </button>
@@ -204,7 +203,7 @@ const TodoList = () => {
                   >
                     <div className="flex justify-between items-start">
                       <p
-                        className={`${
+                        className={`text-sm sm:text-base ${
                           t.completed
                             ? "line-through text-gray-500"
                             : "text-gray-800"
@@ -212,18 +211,18 @@ const TodoList = () => {
                       >
                         {t.text}
                       </p>
-                      <div className="flex gap-1">
+                      <div className="flex gap-2 ml-2">
                         {!t.completed && (
                           <button
                             onClick={() => startEdit(t)}
-                            className="text-blue-500 text-sm"
+                            className="text-blue-500 text-xs sm:text-sm"
                           >
                             Edit
                           </button>
                         )}
                         <button
                           onClick={() => deleteTodo(t._id)}
-                          className="text-red-500 text-sm"
+                          className="text-red-500 text-xs sm:text-sm"
                         >
                           Delete
                         </button>
@@ -252,23 +251,25 @@ const TodoList = () => {
       </div>
 
       {/* Input Area */}
-      <div className="bg-white border-t border-gray-200 p-4">
-        <form onSubmit={submitAdd} className="flex gap-2">
-          <input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type a new task..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-full"
-          />
-          <input
-            type="datetime-local"
-            value={completeBy}
-            onChange={(e) => setCompleteBy(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md"
-          />
+      <div className="bg-white border-t border-gray-200 p-3 sm:p-4">
+        <form onSubmit={submitAdd} className="flex flex-col sm:flex-row gap-2">
+          <div className="flex-1 flex flex-col sm:flex-row gap-2">
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Type a new task..."
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-full text-sm sm:text-base"
+            />
+            <input
+              type="datetime-local"
+              value={completeBy}
+              onChange={(e) => setCompleteBy(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm sm:text-base"
+            />
+          </div>
           <button
             type="submit"
-            className="bg-blue-600 text-white rounded-full px-4 py-2"
+            className="bg-blue-600 text-white rounded-full px-4 py-2 text-sm sm:text-base mt-2 sm:mt-0"
             disabled={!text.trim()}
           >
             Add
